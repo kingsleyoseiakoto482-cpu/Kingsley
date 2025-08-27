@@ -1,14 +1,192 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Hello World</title>
+  <meta charset="UTF-8"/>
+  <title>WarmReads – Your Book Store</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+
+  <style>
+    /* ---------- RESET & ROOT ---------- */
+    *,*::before,*::after{ margin:0; padding:0; box-sizing:border-box; }
+    :root{
+      --primary:#ff6b35; --secondary:#ff9f1c; --bg:#fff7f2;
+      --dark:#3a0e0e; --accent:#e63946; --glass:rgba(255,255,255,.25);
+    }
+    body{ font-family:'Poppins',sans-serif; background:var(--bg); color:var(--dark); overflow-x:hidden; }
+
+    /* ---------- HEADER / GLASS HOUSE ---------- */
+    header{
+      position:relative;
+      height:60vh;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      background:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
+      overflow:hidden;
+    }
+    header::before{ /* glassy overlay */
+      content:'';
+      position:absolute;
+      inset:0;
+      background:linear-gradient(135deg, var(--primary), var(--secondary));
+      opacity:.55;
+      backdrop-filter:blur(12px) saturate(120%);
+      -webkit-backdrop-filter:blur(12px) saturate(120%);
+    }
+    .hero-content{
+      position:relative;
+      text-align:center;
+      color:#fff;
+      animation:float 6s ease-in-out infinite;
+    }
+    .hero-content h1{ font-size:3rem; letter-spacing:1px; }
+    .hero-content p{ margin:.5rem 0 1rem; }
+    nav{ display:flex; gap:1rem; }
+    nav a{
+      padding:.6rem 1.4rem;
+      border:2px solid #fff;
+      border-radius:50px;
+      color:#fff;
+      font-weight:600;
+      text-decoration:none;
+      transition:all .4s cubic-bezier(.4,0,.2,1);
+      background:rgba(255,255,255,.15);
+      backdrop-filter:blur(8px);
+      -webkit-backdrop-filter:blur(8px);
+    }
+    nav a:hover{
+      background:#fff;
+      color:var(--primary);
+      transform:translateY(-3px) scale(1.05);
+    }
+
+    /* ---------- BOOK GRID ---------- */
+    .book-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:2.5rem; padding:4rem 6%; }
+    .book{
+      background:#fff;
+      border-radius:15px;
+      box-shadow:0 8px 20px rgba(255,107,53,.15);
+      overflow:hidden;
+      transition:transform .4s, box-shadow .4s;
+    }
+    .book:hover{ transform:translateY(-10px); box-shadow:0 15px 30px rgba(255,107,53,.35); }
+    .book img{ width:100%; height:320px; object-fit:cover; transition:transform .5s; }
+    .book:hover img{ transform:scale(1.06); }
+    .book-info{ padding:1rem 1.2rem; }
+    .book-info h3{ margin-bottom:.3rem; }
+    .price{ color:var(--accent); font-weight:600; font-size:1.1rem; }
+    .buy-btn{
+      margin-top:.8rem;
+      padding:.6rem 1.6rem;
+      border:none;
+      border-radius:25px;
+      background:var(--primary);
+      color:#fff;
+      font-weight:600;
+      cursor:pointer;
+      transition:background .3s, transform .3s;
+    }
+    .buy-btn:hover{ background:var(--accent); transform:scale(1.08); }
+
+    /* ---------- FOOTER ---------- */
+    footer{
+      background:var(--dark);
+      color:#fff;
+      text-align:center;
+      padding:2.5rem 1rem 1.5rem;
+    }
+    footer .title{ font-size:1.5rem; font-weight:600; margin-bottom:.5rem; }
+    footer .author{ font-size:1.1rem; margin-bottom:.7rem; }
+    footer .contact{ font-size:1rem; line-height:1.6; }
+    footer .contact a{ color:var(--secondary); text-decoration:none; }
+    footer .contact a:hover{ text-decoration:underline; }
+
+    /* ---------- ANIMATIONS ---------- */
+    @keyframes float{
+      0%{ transform:translateY(0); }
+      50%{ transform:translateY(-8px); }
+      100%{ transform:translateY(0); }
+    }
+  </style>
 </head>
+
 <body>
-    <h1>Welcome to Hello World</h1>
-	<link rel="stylesheet" href="style.css">
-    <p>This is an easy website.</p>
-    <img src="https://i.pinimg.com/1200x/ee/be/6f/eebe6f94870dead7d65f032670e5495f.jpg" alt="An image">
-    <a href=https://kingsleyo.kesug.com/kingsley-color-forge/
-">Click here</a>
+
+  <!-- HEADER -->
+  <header>
+    <div class="hero-content">
+      <h1>WarmReads</h1>
+      <p>Curated books delivered with warmth</p>
+      <nav>
+        <a href="#books">Books</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- BOOK GRID -->
+  <section id="books" class="book-grid">
+    <!-- Book 1 -->
+    <div class="book">
+      <img src="https://images-na.ssl-images-amazon.com/images/I/81O1oy0y9eL.jpg" alt="Atomic Habits"/>
+      <div class="book-info">
+        <h3>Atomic Habits</h3>
+        <p class="price">$12.99</p>
+        <button class="buy-btn" onclick="addToCart('Atomic Habits',12.99)">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Book 2 -->
+    <div class="book">
+      <img src="https://images-na.ssl-images-amazon.com/images/I/81wgcld4wxL.jpg" alt="The Midnight Library"/>
+      <div class="book-info">
+        <h3>The Midnight Library</h3>
+        <p class="price">$13.49</p>
+        <button class="buy-btn" onclick="addToCart('The Midnight Library',13.49)">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Book 3 -->
+    <div class="book">
+      <img src="https://images-na.ssl-images-amazon.com/images/I/71x1pU9GGrL.jpg" alt="Educated"/>
+      <div class="book-info">
+        <h3>Educated</h3>
+        <p class="price">$15.99</p>
+        <button class="buy-btn" onclick="addToCart('Educated',15.99)">Add to Cart</button>
+      </div>
+    </div>
+
+    <!-- Book 4 -->
+    <div class="book">
+      <img src="https://images-na.ssl-images-amazon.com/images/I/81wFMY9OAQL.jpg" alt="Where the Crawdads Sing"/>
+      <div class="book-info">
+        <h3>Where the Crawdads Sing</h3>
+        <p class="price">$11.99</p>
+        <button class="buy-btn" onclick="addToCart('Where the Crawdads Sing',11.99)">Add to Cart</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="contact">
+    <div class="title">Empowered by Alpha</div>
+    <div class="author">Author: Kingsley</div>
+    <div class="contact">
+      Email: <a href="mailto:kingsleysoeiakoto@gmail.com">kingsleysoeiakoto@gmail.com</a><br/>
+      Phone: <a href="tel:0507164466">0507164466</a>
+    </div>
+  </footer>
+
+  <!-- Simple JS -->
+  <script>
+    let cart=[];
+    function addToCart(title,price){
+      cart.push({title,price});
+      alert(`"${title}" added to cart!`);
+    }
+  </script>
 </body>
 </html>
